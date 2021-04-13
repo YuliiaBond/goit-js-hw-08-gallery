@@ -11,7 +11,7 @@ import images from './gallery-items.js'
 // 5. Закрытие модального окна по клику на кнопку button[data-action="close-lightbox"].
 // 6. Очистка значения атрибута src элемента img.lightbox__image.
 
-const galleryBox = document.querySelector('js-gallery');
+const galleryBox = document.querySelector('.js-gallery');
 
 // const makeGalleryCard = ({ preview, original, description }) => {
 //     const itemEl = document.createElement('li');
@@ -27,8 +27,8 @@ const galleryBox = document.querySelector('js-gallery');
 //     imgEl.dataSource = original;
 //     imgEl.alt = description;
     
-//     // linkEl.append(imgEl);
-//     itemEl.append(linkEl.append(imgEl));
+//     linkEl.append(imgEl);
+//     itemEl.append(linkEl);
 
 //     return itemEl;
 // };
@@ -37,7 +37,9 @@ const galleryBox = document.querySelector('js-gallery');
 
 // 2 способ
 
-const makeGalleryCard = ({ preview, original, description }) => {
+const makeGalleryCard = transaction => {
+    const { preview, original, description } = transaction;
+
     return `<li class="gallery__item">
     <a class="gallery__link" href="${original}">
     <img
@@ -52,4 +54,4 @@ const makeGalleryCard = ({ preview, original, description }) => {
 
 const makeImagesCard = images.map(makeGalleryCard).join('');
 
-galleryBox.insertAdjacentHTML('afterbegin', makeGalleryCard);
+galleryBox.insertAdjacentHTML('beforeend', makeGalleryCard);
