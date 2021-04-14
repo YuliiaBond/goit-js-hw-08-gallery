@@ -14,6 +14,8 @@ import images from './gallery-items.js'
 
 const galleryBox = document.querySelector('.js-gallery');
 const modalBox = document.querySelector('.js-lightbox');
+const imageEl = document.querySelector('.gallery__image');
+
 // modalBox.classList.add('is-open');
 
 // ---1. СОЗДАНИЕ РАЗМЕТКИ ГАЛЕРЕИ---
@@ -65,8 +67,31 @@ function makeGalleryCard(images) {
 galleryBox.addEventListener('click', onClickImage);
 
 function onClickImage(evt) {
-    if (evt.target.nodeName !== 'A') {
+    if (!evt.target.classList.container('.gallery__image')) {
         return;
     }
-    console.log(evt.target);
+    
+    const openEl = evt.target;
+    const parentImgCard = openEl.closest('.gallery__image');
+
+    removeOpenImgCard();
+    addOpenImgCard(parentImgCard);
+    setModalBgImage(openEl.dataset.original);
 }
+
+function setModalBgImage(img) {
+modalBox.style.backgroundColor = img;
+}
+
+function removeOpenImgCard() {
+    const currentActivImg = document.querySelector('.gallery__image.is-open');
+
+    if (currentActivImg) {
+        currentActivImg.classList.remove('is-open');
+    }
+}
+
+function addOpenImgCard(card) {
+    card.classList.add('.is-open');
+}
+    
