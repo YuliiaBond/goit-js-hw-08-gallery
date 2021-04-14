@@ -11,7 +11,10 @@ import images from './gallery-items.js'
 // 5. Закрытие модального окна по клику на кнопку button[data-action="close-lightbox"].
 // 6. Очистка значения атрибута src элемента img.lightbox__image.
 
+
 const galleryBox = document.querySelector('.js-gallery');
+
+// ---СОЗДАНИЕ РАЗМЕТКИ ГАЛЕРЕИ---
 
 // const makeGalleryCard = ({ preview, original, description }) => {
 //     const itemEl = document.createElement('li');
@@ -35,12 +38,11 @@ const galleryBox = document.querySelector('.js-gallery');
 // const el = images.map(makeGalleryCard);
 // galleryBox.append(...el);
 
-// 2 способ
+// // 2 способ
 
-const makeGalleryCard = transaction => {
-    const { preview, original, description } = transaction;
-
-    return `<li class="gallery__item">
+function makeGalleryCard(images) {
+    return images.map(({ preview, original, description }) => {
+        return `<li class="gallery__item">
     <a class="gallery__link" href="${original}">
     <img
         class="gallery__image"
@@ -49,9 +51,19 @@ const makeGalleryCard = transaction => {
         alt="${description}"
     />
     </a>
-</li>`;
+</li>`;        
+    }).join('');
 };
+const imageCard = makeGalleryCard(images);
+galleryBox.insertAdjacentHTML('beforeend', imageCard);
 
-const makeImagesCard = images.map(makeGalleryCard).join('');
+// ---1 ДЕЛЕГИРОВАНИЕ НА ГАЛЕРЕИ---
 
-galleryBox.insertAdjacentHTML('beforeend', makeGalleryCard);
+galleryBox.addEventListener('click', onClickImage);
+
+function onClickImage(evt) {
+    if (evt.target.nodeName !== 'A') {
+        return;
+    }
+    console.log(evt.target);
+}
