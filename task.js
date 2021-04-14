@@ -14,7 +14,7 @@ import images from './gallery-items.js'
 
 const galleryBox = document.querySelector('.js-gallery');
 const modalBox = document.querySelector('.js-lightbox');
-modalBox.classList.add('is-open');
+// modalBox.classList.add('is-open');
 
 // ---1. СОЗДАНИЕ РАЗМЕТКИ ГАЛЕРЕИ---
 
@@ -42,6 +42,9 @@ modalBox.classList.add('is-open');
 
 // // 2 способ
 
+const imageCard = makeGalleryCard(images);
+galleryBox.insertAdjacentHTML('beforeend', imageCard);
+
 function makeGalleryCard(images) {
     return images.map(({ preview, original, description }) => {
         return `<li class="gallery__item">
@@ -56,8 +59,6 @@ function makeGalleryCard(images) {
 </li>`;        
     }).join('');
 };
-const imageCard = makeGalleryCard(images);
-galleryBox.insertAdjacentHTML('beforeend', imageCard);
 
 // ---2. ДЕЛЕГИРОВАНИЕ НА ГАЛЕРЕИ---
 
