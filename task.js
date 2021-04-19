@@ -14,11 +14,9 @@ import images from './gallery-items.js'
 
 const galleryBox = document.querySelector('.js-gallery');
 const modalBox = document.querySelector('.js-lightbox');
-const closeModalBtn = document.querySelector('.lightbox__button');
+const closeModalBtn = document.querySelector('[data-action="close-lightbox"]');
 const overlayBoxEl = modalBox.querySelector('.lightbox__overlay');
 const overlayImgEl = modalBox.querySelector('.lightbox__image');
-
-
 
 // const makeGalleryCard = ({ preview, original, description }) => {
 //     const itemEl = document.createElement('li');
@@ -69,11 +67,12 @@ let currentSlide = 0;
 let slidesEl = document.querySelectorAll('.gallery__image');
 
 function onClickImage(evt) {
-    if (!evt.target.classList.contains('.gallery__image')) {
+    if (!evt.target.classList.contains('gallery__image')) {
         return;
     };
     
     currentSlide = evt.target;
+    console.log(currentSlide);
 
     slidesChanges(currentSlide);
     
@@ -90,60 +89,63 @@ function onClickImage(evt) {
     window.addEventListener('keydown', onEscPress);
 };
 
-// function slidesChanges(currentSlide) {
-//     overlayImgEl.src = currentSlide.dataset.source;
-//     overlayImgEl.alt = currentSlide.alt;
-// };
+function slidesChanges(currentSlide) {
+    overlayImgEl.src = currentSlide.dataset.source;
+    overlayImgEl.alt = currentSlide.alt;
+};
 
-// function onEscPress(evt) {
-//     const ESC_KEY_CODE = 'Escape';
-//     const isEscKey = evt.code === ESC_KEY_CODE;
-//     if (isEscKey) {
-//         onCloseModal()
-//     }
-// };
+function onEscPress(evt) {
+    const ESC_KEY_CODE = 'Escape';
+    const isEscKey = evt.code === ESC_KEY_CODE;
+    if (isEscKey) {
+        onCloseModal()
+    }
+};
 
-// function onCloseModal() { 
-//     modalBox.classList.remove('is-open');
-//     lightboxImageSrcCleaning();
-//     window.removeEventListener('keydown', onChangingImgKeyPress);
-// };
+function onCloseModal() { 
+    modalBox.classList.remove('is-open');
+    lightboxImageSrcCleaning();
+    window.removeEventListener('keydown', onKeyPress);
+};
 
-// function lightboxImageSrcCleaning() {
-//     overlayImgEl.src = '';
-// };
+function lightboxImageSrcCleaning() {
+    overlayImgEl.src = '';
+};
 
-// function onChangingImgKeyPress(evt) {
-//     const PREV_IMG_KEY_CODE = 'ArrowLeft';
-//     const NEXT_IMG_KEY_CODE = 'ArrowRight';
+function onKeyPress(evt) {
+    const PREV_IMG_KEY_CODE = 'ArrowLeft';
+    const NEXT_IMG_KEY_CODE = 'ArrowRight';
 
-//     let isPrevImgKey = evt.code === PREV_IMG_KEY_CODE;
-//     let isNextImgKey = evt.code === NEXT_IMG_KEY_CODE;
-//     if (isPrevImgKey) {
-//         return showPrevImg();
-//     } else if (isNextImgKey) {
-//         return showNextImg();
-//     }
-// };
+    let isPrevImgKey = evt.code === PREV_IMG_KEY_CODE;
+    let isNextImgKey = evt.code === NEXT_IMG_KEY_CODE;
 
-// function showPrevImg() {
-//     if (currentSlide.dataset.index > 0) {
-//     currentSlide = slidesEl[Number(currentSlide.dataset.index) - 1];
-//     } else {
-//         currentSlide = slidesEl[8];
-//     };
+    if (isPrevImgKey) {
+        console.log('ArrowLeft');
+        showPrevImg();
+    } else if (isNextImgKey) {
+        console.log('ArrowRight');
+        showNextImg();
+    }
+};
 
-//     overlayBoxEl.src = currentSlide.dataset.source;
-//     overlayBoxEl.alt = currentSlide.alt;
-// };
+function showPrevImg() {
+    if (currentSlide.dataset.index > 0) {
+    currentSlide = slidesEl[Number(currentSlide.dataset.index) - 1];
+    } else {
+        currentSlide = slidesEl[8];
+    };
 
-// function showNextImg() {
-//     if (currentSlide.dataset.index < 8) {
-//         currentSlide = slidesEl[Number(currentSlide.dataset.index) + 1];
-//     } else {
-//         currentSlide = slidesEl[0];
-//     };
+    overlayImgEl.src = currentSlide.dataset.source;
+    overlayImgEl.alt = currentSlide.alt;
+};
+
+function showNextImg() {
+    if (currentSlide.dataset.index < 8) {
+        currentSlide = slidesEl[Number(currentSlide.dataset.index) + 1];
+    } else {
+        currentSlide = slidesEl[0];
+    };
     
-//     overlayBoxEl.src = currentSlide.dataset.source;
-//     overlayBoxEl.alt = currentSlide.alt;
-// }
+    overlayImgEl.src = currentSlide.dataset.source;
+    overlayImgEl.alt = currentSlide.alt;
+}
