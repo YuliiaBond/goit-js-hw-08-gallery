@@ -56,7 +56,7 @@ function makeGalleryCard(images) {
         src="${preview}"
         data-source="${original}"
         alt="${description}"
-        data-index="${images.indexOf({el})}"
+        data-index="${images.indexOf(el)}"
     />
     </a>
 </li>`;        
