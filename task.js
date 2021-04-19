@@ -46,7 +46,9 @@ const imageCard = makeGalleryCard(images);
 galleryBox.insertAdjacentHTML('beforeend', imageCard);
 
 function makeGalleryCard(images) {
-    return images.map(({ preview, original, description }) => {
+    return images.map(
+        el => { 
+        const { preview, original, description } = el;
         return `<li class="gallery__item">
     <a class="gallery__link" href="${original}">
     <img
@@ -54,6 +56,7 @@ function makeGalleryCard(images) {
         src="${preview}"
         data-source="${original}"
         alt="${description}"
+        data-index="${images.indexOf({el})}"
     />
     </a>
 </li>`;        
@@ -70,6 +73,8 @@ function onClickImage(evt) {
     if (!evt.target.classList.contains('gallery__image')) {
         return;
     };
+    
+    evt.preventDefault();
     
     currentSlide = evt.target;
     console.log(currentSlide);
@@ -110,6 +115,7 @@ function onCloseModal() {
 
 function lightboxImageSrcCleaning() {
     overlayImgEl.src = '';
+    overlayImgEl.alt = '';
 };
 
 function onKeyPress(evt) {
@@ -130,7 +136,7 @@ function onKeyPress(evt) {
 
 function showPrevImg() {
     if (currentSlide.dataset.index > 0) {
-    currentSlide = slidesEl[Number(currentSlide.dataset.index) - 1];
+        currentSlide = slidesEl[Number(currentSlide.dataset.index) - 1];
     } else {
         currentSlide = slidesEl[8];
     };
